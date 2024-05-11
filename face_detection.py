@@ -13,4 +13,3 @@ def find_face(image):
         cv.rectangle(img, (x, y), (x + w, y + h), (255, 0), thickness=3)
 
     return img
-    cv.waitKey(0)
