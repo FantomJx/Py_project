@@ -28,6 +28,8 @@ def chat_photo(message):
         downloaded_file = bot.download_file(file_info.file_path)
         with open(path, 'wb') as new_file:
             new_file.write(downloaded_file)
+            os.rename(f'{path}', 'photos/photo.jpg')
+            path = 'photos/photo.jpg'
         file = open(f'{path}', 'rb')
         markup = types.InlineKeyboardMarkup()
         btn = types.InlineKeyboardButton('Find faces', callback_data='Find')
@@ -38,10 +40,14 @@ def chat_photo(message):
 
 @bot.callback_query_handler(func=lambda callback: True)
 def callback_message(callback):
+    path = 'photos/photo.jpg'
+    file = open(f'{path}', 'rb')
     if callback.data == 'Find':
-        bot.send_photo(callback.message.chat.id, face_detection.find_face(callback.data))
+        face_detection.find_face(path)
+        bot.send_photo(callback.message.chat.id, file)
     elif callback.data == 'Binary':
-        bot.send_photo(callback.message.chat.id, face_detection.find_face(callback.data))
+        face_detection.to_binary(path)
+        bot.send_photo(callback.message.chat.id, file)
     for file in os.listdir('photos/'):
         if file.endswith('.png'):
             os.remove(file)
