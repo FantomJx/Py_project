@@ -1,4 +1,5 @@
 from telebot import types
+# import openai
 import telebot
 import face_detection
 import requests
@@ -29,8 +30,6 @@ def chat_photo(message):
         with open(path, 'wb') as new_file:
             new_file.write(downloaded_file)
             os.rename(f'{path}', 'photos/photo.jpg')
-            path = 'photos/photo.jpg'
-        file = open(f'{path}', 'rb')
         markup = types.InlineKeyboardMarkup()
         btn = types.InlineKeyboardButton('Find faces', callback_data='Find')
         btn1 = types.InlineKeyboardButton('Turn to binary', callback_data='Binary')
@@ -55,7 +54,7 @@ def callback_message(callback):
 
 @bot.message_handler(commands=['weather'])
 def weather(message):
-    bot.send_message(message.chat.id, 'Enter town ')
+    bot.send_message(message.chat.id, 'Are you going to touch the grass?\nEnter town ')
 
     @bot.message_handler(content_types=['text'])
     def get_weather(_message):
@@ -69,9 +68,22 @@ def weather(message):
                                f'&units=metric')
             data = json.loads(res.text)
             temp = data['main']['temp']
-            bot.reply_to(_message, f'The temperature in {_message.text} now: {temp}')
+            _weather = data['weather'][0]['main']
+            bot.send_message(_message.chat.id, f'The weather in {_message.text} is {_weather}\n'
+                                               f'The temperature is {round(temp, 1)}')
         else:
             bot.reply_to(_message, 'There is not that town')
+
+
+# @bot.message_handler(commands=['gpt'])
+# def gpt(message):
+#     bot.send_message(message.chat.id, 'Enter your question ')
+#
+#     @bot.message_handler(content_types=['text'])
+#     def question(_message):
+#         openai.api_key = "sk-proj-rIAktV2mKgXresRpXFcVT3BlbkFJMMCkLoy2ZXadLpFyzTSV"
+#         completion = openai.Completion.create(engine="gpt-3.5-turbo", prompt=f"{_message}")
+#         bot.reply_to(_message.chat.id, f"{completion.choices[0].text}")
 
 
 @bot.message_handler(commands=['help'])
