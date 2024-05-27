@@ -81,7 +81,6 @@ def weather(message):
 #
 #     @bot.message_handler(content_types=['text'])
 #     def question(_message):
-#         openai.api_key = "sk-proj-rIAktV2mKgXresRpXFcVT3BlbkFJMMCkLoy2ZXadLpFyzTSV"
 #         completion = openai.Completion.create(engine="gpt-3.5-turbo", prompt=f"{_message}")
 #         bot.reply_to(_message.chat.id, f"{completion.choices[0].text}")
 
