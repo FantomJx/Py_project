@@ -54,7 +54,7 @@ def callback_message(callback):
 
 @bot.message_handler(commands=['weather'])
 def weather(message):
-    bot.send_message(message.chat.id, 'Are you going to touch the grass?\nEnter town ')
+    bot.send_message(message.chat.id, '\nEnter town ')
 
     @bot.message_handler(content_types=['text'])
     def get_weather(_message):
@@ -81,6 +81,7 @@ def weather(message):
 #
 #     @bot.message_handler(content_types=['text'])
 #     def question(_message):
+#         openai.api_key = "sk-proj-rIAktV2mKgXresRpXFcVT3BlbkFJMMCkLoy2ZXadLpFyzTSV"
 #         completion = openai.Completion.create(engine="gpt-3.5-turbo", prompt=f"{_message}")
 #         bot.reply_to(_message.chat.id, f"{completion.choices[0].text}")
 
