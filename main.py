@@ -1,13 +1,10 @@
 from telebot import types
 # import openai
-import telebot
 import face_detection
 import requests
 import json
 import os
-
-bot = telebot.TeleBot('5830243610:AAFOtgF7pX5bZUnufGacrvRJwmIcyQtsZ_U')
-API = '3f90c731689673e0a4c127037eeb1a67'
+from conf import API, bot
 
 
 @bot.message_handler(commands=['site'])
